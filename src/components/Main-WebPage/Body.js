@@ -1,5 +1,5 @@
 import React, { StrictMode } from "react";
-import SearchBar from "./SearchBar";
+import SearchBar from "./SearchBar.js";
 import "./Body.css";
 import "./SubmitButton.js";
 import SubmitButton from "./SubmitButton.js";
@@ -15,11 +15,18 @@ const Body = () => {
           <div class="container">
             <div class="row justify-content-center">
               <div class="col-md-6">
-                <h6>
-                  An AI tool that generates insightful summaries for any given
-                  YouTube video. It uses cutting-edge technologies to elevate
-                  and facilitate your watching experience.
+                {/* this should be enhanced more visually */}
+                <h6 className="text-center">
+                  A Revolutionary AI-Powered Platform That Transforms Your
+                  YouTube Viewing Experience. <br /> Our advanced tool
+                  intelligently generates comprehensive and insightful
+                  summaries. <br /> Utilizing the latest in cutting-edge AI
+                  technologies, ExploreAI not only enhances your understanding
+                  but also significantly streamlines and enriches your watching
+                  experience, making every video more accessible and
+                  informative.
                 </h6>
+                <h1 className="text-center pt-4">Try it </h1>
               </div>
             </div>
           </div>

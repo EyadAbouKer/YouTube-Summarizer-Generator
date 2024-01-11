@@ -5,7 +5,7 @@ const Header = () => {
     <div style={{ zIndex: 1 }}>
       <nav class="navbar navbar-expand-lg bg-dark">
         <a class="navbar-brand text-white" href="#">
-          Navbar
+          CondensaCore
         </a>
         <button
           class="navbar-toggler"
@@ -21,16 +21,16 @@ const Header = () => {
         <div class="collapse navbar-collapse " id="navbarNavAltMarkup">
           <div class="navbar-nav ">
             <a class="nav-item nav-link active text-white" href="#">
-              Home <span class="sr-only">(current)</span>
+              Home
             </a>
             <a class="nav-item nav-link text-white" href="#">
-              Features
+              Features -- must be completed to fit
             </a>
             <a class="nav-item nav-link text-white" href="#">
-              Pricing
+              Pricing -- good idea to see costs maybe in a graph / abd
             </a>
             <a class="nav-item nav-link  text-white" href="#">
-              Disabled
+              About Us
             </a>
           </div>
         </div>
