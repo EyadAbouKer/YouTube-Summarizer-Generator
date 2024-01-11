@@ -1,0 +1,14 @@
+.body-background-grey {
+    background-color: #323232;
+    height: 100vh ;
+    
+}
+@media screen and (min-width: 992px) {
+    .body-background-grey {
+        background-image: url('C:\Users\abouk\Downloads\background3.png');
+    background-repeat: no-repeat;
+    background-position: right; 
+    background-size: 37% auto; 
+    
+    }
+}

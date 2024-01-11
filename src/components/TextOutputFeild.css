@@ -1,0 +1,12 @@
+.text-output-feild{
+    background-color: #7f7878;
+    opacity: 0.4;
+}
+
+.custom-placeholderr::placeholder {
+    color: #B1B1B1 ; 
+  }
+  .form-controll:focus {
+    background-color: 	#63666A;
+  }
+  

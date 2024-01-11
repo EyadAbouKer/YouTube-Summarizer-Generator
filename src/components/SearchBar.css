@@ -1,0 +1,11 @@
+.bar-background-grey{
+    background-color: #323232;
+    /* opacity: 0.4; */
+}
+.custom-placeholder::placeholder {
+    color: #B1B1B1 ; 
+  }
+  .form-control:focus {
+    background-color: 	#63666A;
+  }
+  
