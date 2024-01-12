@@ -1,10 +1,11 @@
 .text-output-feild{
-    background-color: #7f7878;
-    opacity: 0.4;
+    background-color: #323232;
+    opacity: 1;
+    /* height: 40vh; */
 }
 
 .custom-placeholderr::placeholder {
-    color: #B1B1B1 ; 
+    color: #B1B1B1; 
   }
   .form-controll:focus {
     background-color: 	#63666A;
