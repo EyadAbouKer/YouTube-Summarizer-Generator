@@ -3,7 +3,7 @@ import "./TextOutputFeild.css";
 
 function TextOutputFeild() {
   return (
-    <div className="pt-4 ">
+    <div className="pt-4 d-flex">
       <Form.Control
         type="textarea"
         placeholder="output text"
