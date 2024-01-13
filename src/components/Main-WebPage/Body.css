@@ -1,14 +1,1 @@
-.body-background-grey {
-    background-color: #323232;
-    height: 100vh ;
-    
-}
-@media screen and (min-width: 992px) {
-    .body-background-grey {
-    background-image: url('C:\Users\abouk\Desktop\Hackathon2024- TheCodFatherCrew\CONDENSACORE\ai-summarizer-v.0.0\src\components\media\v1.png');
-    background-repeat: no-repeat;
-    background-position: right; 
-    background-size: 37% auto; 
-    
-    }
-}
+
