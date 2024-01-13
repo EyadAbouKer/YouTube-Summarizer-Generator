@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import "./SearchBar.css";
+import SubmitButton from "./SubmitButton";
 
-const SearchBar = () => {
+const SearchBar = ({ URL, setterURL }) => {
   return (
     <div className="p-3">
       <input
@@ -9,6 +10,8 @@ const SearchBar = () => {
         type="search"
         placeholder="Enter Youtube URL"
         aria-label="Search"
+        onChange={setterURL}
+        value={URL}
       ></input>
     </div>
   );

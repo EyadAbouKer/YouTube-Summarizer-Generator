@@ -7,6 +7,25 @@ import DropDownMenu from "./DropDownMenu.js";
 import TextOutputFeild from "./TextOutputFeild.js";
 
 const Body = () => {
+  {
+    /* /----------------------------------------------------------------------------/ */
+  }
+  // trying to hool SubmitButton and SearchBar together
+  const [getURL, setURL] = React.useState("");
+
+  const handleInputChange = (e) => {
+    setURL(e.target.value);
+  };
+  const handleSubmit = () => {
+    alert(`Submitting: ${getURL}`);
+    console.log(getURL);
+    // Handle the submission logic here (e.g., send data to an API)
+  };
+
+  {
+    /* /----------------------------------------------------------------------------/ */
+  }
+
   return (
     <StrictMode>
       <div className="">
@@ -33,7 +52,7 @@ const Body = () => {
           {/* /----------------------------------------------------------------------------/ */}
           <div class="row justify-content-center">
             <div class="col-md-6">
-              <SearchBar />
+              <SearchBar URL={getURL} setterURL={handleInputChange} />
             </div>
           </div>
           {/* /----------------------------------------------------------------------------/ */}
@@ -51,7 +70,7 @@ const Body = () => {
                 <DropDownMenu />
               </div>
               <div class="col-md-2   m-1 d-flex justify-content-end">
-                <SubmitButton />
+                <SubmitButton onSubmit={handleSubmit} />
               </div>
             </div>
           </div>
