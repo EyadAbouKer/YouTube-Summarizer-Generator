@@ -8,16 +8,19 @@ import TextOutputFeild from "./TextOutputFeild.js";
 
 const Body = () => {
   {
-    /* /----------------------------------------------------------------------------/ */
+    /* /-------------------------connecting searchBar and SubmitButton---------------------------------------------------/ */
   }
-  // trying to hool SubmitButton and SearchBar together
+  // a hook to SubmitButton and SearchBar together
   const [getURL, setURL] = React.useState("");
 
+  //works with SearchBar to get the input from and update the setURL
   const handleInputChange = (e) => {
     setURL(e.target.value);
   };
+
+  //this function is going to be used to push the URL to openAI or to another function that concatinates everything
   const handleSubmit = () => {
-    alert(`Submitting: ${getURL}`);
+    // alert(`Submitting: ${getURL}`);
     console.log(getURL);
     // Handle the submission logic here (e.g., send data to an API)
   };

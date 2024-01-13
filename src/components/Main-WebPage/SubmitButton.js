@@ -1,8 +1,6 @@
 import React from "react";
 
 const SubmitButton = ({ onSubmit }) => {
-  // this function takes the input from the searchBar and return its content(the youtube URL) as a string
-
   return (
     <div>
       <button
