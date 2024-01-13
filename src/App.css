@@ -1,7 +1,10 @@
-*{
-    font-family: Inter;
+.App{
+    font-family: Inter, sans-serif;
     font-style: normal;
     font-weight: 400;
-    line-height: 175%; 
-    
+    line-height: 175%;
+}
+
+a {
+    font-family: 'Inria Sans', sans-serif;
 }

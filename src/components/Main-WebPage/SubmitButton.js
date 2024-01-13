@@ -5,8 +5,8 @@ const SubmitButton = ({ onSubmit }) => {
     <div>
       <button
         type="button"
-        class="btn"
-        style={{ backgroundColor: "#DA5B00" }}
+        className="btn text-white"
+        style={{ backgroundColor: "#DA5B00", fontWeight: "600" }}
         onClick={onSubmit}
       >
         Summarize

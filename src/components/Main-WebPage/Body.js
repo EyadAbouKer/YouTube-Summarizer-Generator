@@ -1,10 +1,10 @@
-import React, { StrictMode } from "react";
-import SearchBar from "./SearchBar.js";
+import React, { StrictMode, useState } from "react";
 import "./Body.css";
 import "./SubmitButton.js";
+import SearchBar from "./SearchBar.js";
 import SubmitButton from "./SubmitButton.js";
 import DropDownMenu from "./DropDownMenu.js";
-import TextOutputFeild from "./TextOutputFeild.js";
+import TextOutputField from "./TextOutputField.js";
 
 const Body = () => {
   {
@@ -29,64 +29,65 @@ const Body = () => {
     /* /----------------------------------------------------------------------------/ */
   }
 
+  const depthItems = [
+    { value: "brief", label: "brief" },
+    { value: "normal", label: "normal" },
+    { value: "detailed", label: "detailed" },
+  ];
+  const toneItems = [
+    { value: "funny", label: "funny" },
+    { value: "normal", label: "normal" },
+    { value: "formal", label: "formal" },
+  ];
+  const styleItems = [
+    { value: "paragraph", label: "paragraph" },
+    { value: "bullet points", label: "bullet points" },
+    { value: "abstract", label: "abstract" },
+  ];
+
   return (
     <StrictMode>
-      <div className="">
+      <>
         {/* /----------------------------------------------------------------------------/ */}
-        <div class="p-3 mb-0 text-white w-100 pt-5 body-background-grey">
-          <div class="container">
-            <div class="row justify-content-center">
-              <div class="col-md-6">
-                {/* this should be enhanced more visually */}
-                <h6 className="text-center">
-                  A Revolutionary AI-Powered Platform That Transforms Your
-                  YouTube Viewing Experience. <br /> Our advanced tool
-                  intelligently generates comprehensive and insightful
-                  summaries. <br /> Utilizing the latest in cutting-edge AI
-                  technologies, ExploreAI not only enhances your understanding
-                  but also significantly streamlines and enriches your watching
-                  experience, making every video more accessible and
-                  informative.
-                </h6>
-                <h1 className="text-center pt-4">Try it </h1>
-              </div>
-            </div>
+        <div className="p-lg-5 p-md-0 text-white pt-5">
+          <p className="text-center px-5 mt-2 mb-2" style={{ lineHeight: 1.5 }}>
+            A Revolutionary AI-Powered Platform That Transforms Your YouTube
+            Viewing Experience. Our advanced tool intelligently generates
+            comprehensive and insightful summaries. Utilizing the latest in
+            cutting-edge AI technologies, ExploreAI not only enhances your
+            understanding but also significantly streamlines and enriches your
+            watching experience, making every video more accessible and
+            informative.
+          </p>
+          {/* /----------------------------------------------------------------------------/ */}
+          {/* /----------------------------------------------------------------------------/ */}
+          <div className="px-5">
+            <SearchBar URL={getURL} setterURL={handleInputChange} />
           </div>
           {/* /----------------------------------------------------------------------------/ */}
-          <div class="row justify-content-center">
-            <div class="col-md-6">
-              <SearchBar URL={getURL} setterURL={handleInputChange} />
+
+          <div className="d-flex justify-content-between px-5 center">
+            <div className="mb-1 bt-1 d-flex justify-content-center">
+              <DropDownMenu items={depthItems} />
+            </div>
+            <div className="mb-1 bt-1 d-flex justify-content-center">
+              <DropDownMenu items={toneItems} />
+            </div>
+            <div className="mb-1 bt-1 d-flex justify-content-center">
+              <DropDownMenu items={styleItems} />
+            </div>
+            <div className="mb-1 bt-1 d-flex justify-content-center">
+              <SubmitButton onSubmit={handleSubmit} />
             </div>
           </div>
           {/* /----------------------------------------------------------------------------/ */}
 
-          {/* /----------------------------------------------------------------------------/ */}
-          <div className="p-2 ">
-            <div class="row justify-content-center">
-              <div class="col-md-2  m-1 d-flex justify-content-end">
-                <DropDownMenu />
-              </div>
-              <div class="col-md-2   m-1 d-flex justify-content-end">
-                <DropDownMenu />
-              </div>
-              <div class="col-md-2  m-1 d-flex justify-content-end">
-                <DropDownMenu />
-              </div>
-              <div class="col-md-2   m-1 d-flex justify-content-end">
-                <SubmitButton onSubmit={handleSubmit} />
-              </div>
-            </div>
-          </div>
-          {/* /----------------------------------------------------------------------------/ */}
-
-          <div class="row justify-content-center">
-            <div class="col-md-6">
-              <TextOutputFeild />
-            </div>
+          <div className="px-5">
+            <TextOutputField />
           </div>
           {/* /----------------------------------------------------------------------------/ */}
         </div>
-      </div>
+      </>
     </StrictMode>
   );
 };
