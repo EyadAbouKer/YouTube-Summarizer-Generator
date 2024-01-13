@@ -4,7 +4,8 @@ import "./SubmitButton.js";
 import SearchBar from "./SearchBar.js";
 import SubmitButton from "./SubmitButton.js";
 import DropDownMenu from "./DropDownMenu.js";
-import TextOutputField from "./TextOutputField.js";
+// import TextOutputField from "./TextOutputField.js";
+import TextOutputFeild from "./TextOutputFeild.js";
 
 const Body = () => {
   {
@@ -83,7 +84,7 @@ const Body = () => {
           {/* /----------------------------------------------------------------------------/ */}
 
           <div className="px-5">
-            <TextOutputField />
+            <TextOutputFeild />
           </div>
           {/* /----------------------------------------------------------------------------/ */}
         </div>
