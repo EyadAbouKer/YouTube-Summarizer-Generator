@@ -1,17 +1,17 @@
 import Form from "react-bootstrap/Form";
 import "./TextOutputFeild.css";
 
-function TextOutputFeild() {
+function TextOutputFeild(props) {
   return (
-    <div className="pt-4 d-flex">
-      <Form.Control
-        type="textarea"
-        placeholder="output text"
-        // readOnly
-        // rows={9}
-        className="text-output-feild custom-placeholder"
-      />
-    </div>
+    <textarea
+      placeholder="output text"
+      value={props.value}
+      readOnly={true}
+      rows="30"
+      className="mt-4 form-control mr-sm-2 text-white custom-placeholder"
+      style={{color: 'white', backgroundColor: '#454545', border: 'none', resize: 'none'}}
+    >
+    </textarea>
   );
 }
 

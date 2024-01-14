@@ -4,8 +4,9 @@ import "./SubmitButton.js";
 import SearchBar from "./SearchBar.js";
 import SubmitButton from "./SubmitButton.js";
 import DropDownMenu from "./DropDownMenu.js";
-// import TextOutputField from "./TextOutputField.js";
 import TextOutputFeild from "./TextOutputFeild.js";
+
+const API_KEY = "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";
 
 const Body = () => {
   {
@@ -19,12 +20,43 @@ const Body = () => {
     setURL(e.target.value);
   };
 
+  const [summary, setSummary] = useState("");
   //this function is going to be used to push the URL to openAI or to another function that concatinates everything
-  const handleSubmit = () => {
-    // alert(`Submitting: ${getURL}`);
+  async function handleSubmit() {
     console.log(getURL);
-    // Handle the submission logic here (e.g., send data to an API)
-  };
+
+    const chatGptApiBody = {
+      "model": "gpt-3.5-turbo",
+      "messages": [
+        {
+          "role": "system",
+          "content": "make a short summary for the content you are provided with. make it brief, formal, and in a paragraph format"
+        },
+        {
+          "role": "user",
+          "content": getURL
+        }
+      ],
+      "temperature": 0.7,
+      "max_tokens": 164,
+      "top_p": 1
+    }
+
+
+    await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + API_KEY,
+      },
+      body: JSON.stringify(chatGptApiBody)
+    }).then((data) => {
+      return data.json();
+    }).then((data) => {
+      console.log(data);
+      setSummary(data.choices[0].message.content);
+    });
+  }
 
   {
     /* /----------------------------------------------------------------------------/ */
@@ -84,7 +116,7 @@ const Body = () => {
           {/* /----------------------------------------------------------------------------/ */}
 
           <div className="px-5">
-            <TextOutputFeild />
+            <TextOutputFeild value={summary}/>
           </div>
           {/* /----------------------------------------------------------------------------/ */}
         </div>
