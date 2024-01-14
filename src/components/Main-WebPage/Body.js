@@ -26,36 +26,38 @@ const Body = () => {
     console.log(getURL);
 
     const chatGptApiBody = {
-      "model": "gpt-3.5-turbo",
-      "messages": [
+      model: "gpt-3.5-turbo",
+      messages: [
         {
-          "role": "system",
-          "content": "make a short summary for the content you are provided with. make it brief, formal, and in a paragraph format"
+          role: "system",
+          content:
+            "make a short summary for the content you are provided with. make it brief, formal, and in bullet points format",
         },
         {
-          "role": "user",
-          "content": getURL
-        }
+          role: "user",
+          content: getURL,
+        },
       ],
-      "temperature": 0.7,
-      "max_tokens": 164,
-      "top_p": 1
-    }
-
+      temperature: 0.7,
+      max_tokens: 164,
+      top_p: 1,
+    };
 
     await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": "Bearer " + API_KEY,
+        Authorization: "Bearer " + API_KEY,
       },
-      body: JSON.stringify(chatGptApiBody)
-    }).then((data) => {
-      return data.json();
-    }).then((data) => {
-      console.log(data);
-      setSummary(data.choices[0].message.content);
-    });
+      body: JSON.stringify(chatGptApiBody),
+    })
+      .then((data) => {
+        return data.json();
+      })
+      .then((data) => {
+        console.log(data);
+        setSummary(data.choices[0].message.content);
+      });
   }
 
   {
@@ -116,7 +118,7 @@ const Body = () => {
           {/* /----------------------------------------------------------------------------/ */}
 
           <div className="px-5">
-            <TextOutputFeild value={summary}/>
+            <TextOutputFeild value={summary} />
           </div>
           {/* /----------------------------------------------------------------------------/ */}
         </div>
