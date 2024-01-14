@@ -12,6 +12,9 @@ const Body = () => {
   {
     /* /-------------------------connecting searchBar and SubmitButton---------------------------------------------------/ */
   }
+
+  const [isDisabled, setIsDisabled] = useState(false);
+
   // a hook to SubmitButton and SearchBar together
   const [getURL, setURL] = React.useState("");
 
@@ -24,6 +27,7 @@ const Body = () => {
   //this function is going to be used to push the URL to openAI or to another function that concatinates everything
   async function handleSubmit() {
     console.log(getURL);
+    setIsDisabled(true);
 
     const chatGptApiBody = {
       model: "gpt-3.5-turbo",
@@ -58,6 +62,8 @@ const Body = () => {
         console.log(data);
         setSummary(data.choices[0].message.content);
       });
+
+    setIsDisabled(false);
   }
 
   {
@@ -84,8 +90,11 @@ const Body = () => {
     <StrictMode>
       <>
         {/* /----------------------------------------------------------------------------/ */}
-        <div className="p-lg-5 p-md-0 text-white pt-5">
-          <p className="text-center px-5 mt-2 mb-2" style={{ lineHeight: 1.5 }}>
+        <div className="p-lg-5 p-md-0 text-white ">
+          <p
+            className="text-center px-5 pt-5 mt-2 mb-2"
+            style={{ lineHeight: 1.5 }}
+          >
             A Revolutionary AI-Powered Platform That Transforms Your YouTube
             Viewing Experience. Our advanced tool intelligently generates
             comprehensive and insightful summaries. Utilizing the latest in
@@ -101,18 +110,21 @@ const Body = () => {
           </div>
           {/* /----------------------------------------------------------------------------/ */}
 
-          <div className="d-flex justify-content-between px-5 center">
-            <div className="mb-1 bt-1 d-flex justify-content-center">
+          <div className="d-flex flex-column flex-sm-row justify-content-between px-5 center">
+            <div className="mb-3 d-flex flex-row flex-sm-column justify-content-between ">
+              <p className="label">Summary Depth</p>
               <DropDownMenu items={depthItems} />
             </div>
-            <div className="mb-1 bt-1 d-flex justify-content-center">
+            <div className="mb-3 d-flex flex-row flex-sm-column justify-content-between">
+              <p className="label">Summary Tone</p>
               <DropDownMenu items={toneItems} />
             </div>
-            <div className="mb-1 bt-1 d-flex justify-content-center">
+            <div className="mb-3 d-flex flex-row flex-sm-column justify-content-between">
+              <p className="label">Summary Style</p>
               <DropDownMenu items={styleItems} />
             </div>
-            <div className="mb-1 bt-1 d-flex justify-content-center">
-              <SubmitButton onSubmit={handleSubmit} />
+            <div className="mb-3 d-flex flex-column justify-content-end m-auto">
+              <SubmitButton onSubmit={handleSubmit} isDisabled={isDisabled} />
             </div>
           </div>
           {/* /----------------------------------------------------------------------------/ */}

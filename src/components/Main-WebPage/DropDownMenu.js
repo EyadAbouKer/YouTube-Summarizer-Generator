@@ -1,4 +1,5 @@
 import React from "react";
+import './DropDownMenu.css'
 
 function DropDownMenu(props) {
 
@@ -16,8 +17,8 @@ function DropDownMenu(props) {
     <select
       value={state.selectedOption}
       onChange={handleChange}
-      style={{background: 'transparent', color: '#868686', fontWeight: '600', borderRadius: '10px', padding: '4px'}}
       cssClass='e-rounded-menu'
+      className="stylized-drop-down"
     >
       {props.items.map(({value, label}, index) => <option value={value}>{label}</option>)}
     </select>

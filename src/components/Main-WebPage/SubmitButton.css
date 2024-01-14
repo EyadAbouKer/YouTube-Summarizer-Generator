@@ -1,0 +1,22 @@
+.stylized {
+    background-color: #DA5B00;
+    font-weight: 600;
+    width: 120px;
+}
+.stylized:hover {
+    background-color: #da6918;
+}
+
+.spinner_qM83{animation:spinner_8HQG 1.05s infinite}
+.spinner_oXPr{animation-delay:.1s}
+.spinner_ZTLf{animation-delay:.2s}@keyframes
+                                  spinner_8HQG{0 %,57.14%{
+        animation-timing-function:cubic-bezier(0.33,.66,.66,1);
+        transform:translate(0)}28.57%{animation-timing-function:cubic-bezier(0.33,0,.66,.33);transform:translateY(-6px)}100%{transform:translate(0)}}
+                                  
+@media screen and (max-width: 992px){
+    .stylized {
+        font-size: small;
+        width: 100px;
+    }
+}
