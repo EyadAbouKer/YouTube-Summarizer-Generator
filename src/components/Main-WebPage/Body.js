@@ -23,51 +23,6 @@ const Body = () => {
     setURL(e.target.value);
   };
 
-  const [summary, setSummary] = useState("");
-  //this function is going to be used to push the URL to openAI or to another function that concatinates everything
-  async function handleSubmit() {
-    console.log(getURL);
-    setIsDisabled(true);
-
-    const chatGptApiBody = {
-      "model": "gpt-3.5-turbo",
-      "messages": [
-        {
-          "role": "system",
-          "content": "make a short summary for the content you are provided with. make it brief, formal, and in a paragraph format"
-        },
-        {
-          "role": "user",
-          "content": getURL
-        }
-      ],
-      "temperature": 0.7,
-      "max_tokens": 164,
-      "top_p": 1
-    }
-
-
-    await fetch("https://api.openai.com/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer " + API_KEY,
-      },
-      body: JSON.stringify(chatGptApiBody)
-    }).then((data) => {
-      return data.json();
-    }).then((data) => {
-      console.log(data);
-      setSummary(data.choices[0].message.content);
-    });
-
-    setIsDisabled(false);
-  }
-
-  {
-    /* /----------------------------------------------------------------------------/ */
-  }
-
   const depthItems = [
     { value: "brief", label: "brief" },
     { value: "normal", label: "normal" },
@@ -83,6 +38,66 @@ const Body = () => {
     { value: "bullet points", label: "bullet points" },
     { value: "abstract", label: "abstract" },
   ];
+
+  const [selectedDepthOption, setSelectedDepthOption] = useState("brief");
+  const [selectedToneOption, setSelectedToneOption] = useState("normal");
+  const [selectedStyleOption, setSelectedStyleOption] = useState("paragraph");
+
+
+  const [summary, setSummary] = useState("");
+  //this function is going to be used to push the URL to openAI or to another function that concatenates everything
+  async function handleSubmit() {
+    console.log(getURL);
+    setIsDisabled(true);
+
+    const chatGptApiBody = {
+      "model": "gpt-3.5-turbo",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Summarize the provided content in a " + {selectedStyleOption} + " format; make it " + {selectedDepthOption} + ", and" + {selectedToneOption}
+        },
+        {
+          "role": "user",
+          "content": getURL
+        }
+      ],
+      "temperature": 0.7,
+      "max_tokens": 200,
+      "top_p": 1
+    }
+
+    console.log("make a very short summary for the content you are provided with. make it " + selectedDepthOption + ", " + selectedToneOption + ", and in a " + selectedStyleOption + " format.");
+
+    await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + API_KEY,
+      },
+      body: JSON.stringify(chatGptApiBody)
+    }).then((data) => {
+      return data.json();
+    }).then((data) => {
+      console.log(data);
+      setSummary(data.choices[0].message.content);
+    });
+    setIsDisabled(false);
+  }
+
+  {
+    /* /----------------------------------------------------------------------------/ */
+  }
+
+  function updateSelectedDepthItem(evt) {
+    setSelectedDepthOption(evt.target.value);
+  }
+  function updateSelectedToneItem(evt) {
+    setSelectedToneOption(evt.target.value);
+  }
+  function updateSelectedStyleItem(evt) {
+    setSelectedStyleOption(evt.target.value);
+  }
 
   return (
     <StrictMode>
@@ -108,15 +123,15 @@ const Body = () => {
           <div className="d-flex flex-column flex-sm-row justify-content-between px-5 center">
             <div className="mb-3 d-flex flex-row flex-sm-column justify-content-between ">
               <p className="label">Summary Depth</p>
-              <DropDownMenu items={depthItems} />
+              <DropDownMenu items={depthItems} selected={selectedDepthOption} setSelected={updateSelectedDepthItem}/>
             </div>
             <div className="mb-3 d-flex flex-row flex-sm-column justify-content-between">
               <p className="label">Summary Tone</p>
-              <DropDownMenu items={toneItems} />
+              <DropDownMenu items={toneItems} selected={selectedToneOption} setSelected={updateSelectedToneItem}/>
             </div>
             <div className="mb-3 d-flex flex-row flex-sm-column justify-content-between">
               <p className="label">Summary Style</p>
-              <DropDownMenu items={styleItems} />
+              <DropDownMenu items={styleItems} selected={selectedStyleOption} setSelected={updateSelectedStyleItem}/>
             </div>
             <div className="mb-3 d-flex flex-column justify-content-end submit-button">
               <SubmitButton onSubmit={handleSubmit} isDisabled={isDisabled}/>
