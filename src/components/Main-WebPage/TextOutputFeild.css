@@ -6,8 +6,7 @@
 
 .custom-placeholderr::placeholder {
     color: #B1B1B1; 
-  }
-  .form-controll:focus {
-    background-color: 	#63666A;
-  }
-  
+}
+.form-controll:focus {
+background-color: 	#63666A;
+}

@@ -1,4 +1,4 @@
-import React, { StrictMode, useState } from "react";
+import React, {StrictMode, useEffect, useState} from "react";
 import "./Body.css";
 import "./SubmitButton.js";
 import SearchBar from "./SearchBar.js";
@@ -11,6 +11,10 @@ const API_KEY = "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";
 const Body = () => {
   {
     /* /-------------------------connecting searchBar and SubmitButton---------------------------------------------------/ */
+  }
+
+  function getKeywords() {
+
   }
 
   const [isDisabled, setIsDisabled] = useState(false);
@@ -45,12 +49,15 @@ const Body = () => {
 
 
   const [summary, setSummary] = useState("");
+  let summaryVariable = "";
+  let importantKeywords = [""];
+
   //this function is going to be used to push the URL to openAI or to another function that concatenates everything
   async function handleSubmit() {
     console.log(getURL);
     setIsDisabled(true);
 
-    const chatGptApiBody = {
+    const chatGptApiBody_Summarize = {
       "model": "gpt-3.5-turbo",
       "messages": [
         {
@@ -63,11 +70,9 @@ const Body = () => {
         }
       ],
       "temperature": 0.7,
-      "max_tokens": 200,
+      "max_tokens": 250,
       "top_p": 1
     }
-
-    console.log("make a very short summary for the content you are provided with. make it " + selectedDepthOption + ", " + selectedToneOption + ", and in a " + selectedStyleOption + " format.");
 
     await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
@@ -75,13 +80,48 @@ const Body = () => {
         "Content-Type": "application/json",
         "Authorization": "Bearer " + API_KEY,
       },
-      body: JSON.stringify(chatGptApiBody)
+      body: JSON.stringify(chatGptApiBody_Summarize)
     }).then((data) => {
       return data.json();
     }).then((data) => {
       console.log(data);
-      setSummary(data.choices[0].message.content);
+      summaryVariable = data.choices[0].message.content;
     });
+
+    await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + API_KEY,
+      },
+      body: JSON.stringify({
+        "model": "gpt-3.5-turbo",
+        "messages": [
+          {
+            "role": "system",
+            "content": "return a max of 6 most important keywords in the following and separate them by commas"
+          },
+          {
+            "role": "user",
+            "content": summaryVariable
+          }
+        ],
+        "temperature": 0.7,
+        "max_tokens": 50,
+        "top_p": 1
+      })
+    }).then((data) => {
+      return data.json();
+    }).then((data) => {
+      console.log(data);
+      importantKeywords = data.choices[0].message.content.split(',');
+    });
+
+    for (let i = 0; i < importantKeywords.length; i++) {
+      summaryVariable = summaryVariable.split(importantKeywords[i]).join('<span style="color: #DA5B00; font-weight: bold;">' + importantKeywords[i] + '</span>');
+    }
+    setSummary(summaryVariable);
+
     setIsDisabled(false);
   }
 
@@ -140,7 +180,7 @@ const Body = () => {
           {/* /----------------------------------------------------------------------------/ */}
 
           <div className="px-5">
-            <TextOutputFeild value={summary}/>
+            <TextOutputFeild summary={summary}/>
           </div>
           {/* /----------------------------------------------------------------------------/ */}
         </div>
