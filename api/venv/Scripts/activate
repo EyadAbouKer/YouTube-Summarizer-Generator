@@ -38,7 +38,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="C:\Users\zizoo\Desktop\ABOOD\CODING_MAIN\ReactProjects\VScode_projects\ai-summarizer\api\venv"
+VIRTUAL_ENV="C:\Users\abouk\Desktop\Hackathon2024- TheCodFatherCrew\CONDENSACORE\ai-summarizer-v.0.0\api\venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

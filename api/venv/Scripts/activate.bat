@@ -8,7 +8,7 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-set VIRTUAL_ENV=C:\Users\zizoo\Desktop\ABOOD\CODING_MAIN\ReactProjects\VScode_projects\ai-summarizer\api\venv
+set VIRTUAL_ENV=C:\Users\abouk\Desktop\Hackathon2024- TheCodFatherCrew\CONDENSACORE\ai-summarizer-v.0.0\api\venv
 
 if not defined PROMPT set PROMPT=$P$G
 

@@ -9,7 +9,8 @@ import TextOutputFeild from "./TextOutputFeild.js";
 const API_KEY = "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";
 
 const Body = () => {
-  const [test, setTest] = useState(9);
+  // get text from python server
+  const [test, setTest] = useState(5);
   useEffect(() => {
     fetch("/api/route").then((res) =>
       res.json().then((data) => {
@@ -31,6 +32,50 @@ const Body = () => {
     if (e.target.value !== "") setIsDisabled(false);
     else setIsDisabled(true);
   };
+
+  {
+    /* /----------------------------------------------------------------------------/ */
+  }
+  // send "getURL" which contains the URL from the search bar
+  // function sendURLToServer() {
+  //   const dataToSendToServer = { string: getURL };
+
+  //   fetch("/api/getURL", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify(dataToSendToServer),
+  //   })
+  //   .then((response) => response.json())
+  //   .then((data) => {
+  //     console.log("Success:", data);
+  //   })
+  //     .catch((error) => {
+  //       console.error("Error:", error);
+  //     });
+
+  /* /----------------------------------------------------------------------------/ */
+  /* /----------------------------------------------------------------------------/ */
+  //   }
+  // const submitURLToServer = async () => {
+  //   const receivedURL = {
+  //     'URL' : getURL,
+  //   };
+  //   const result = await fetch("http://127.0.0.1:5000/api/getURL", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify(receivedURL),
+  //   });
+  //   const resultsInJson = await result.json();
+  //   console.log("the URL submitted is" + resultsInJson);
+  // };
+
+  {
+    /* /----------------------------------------------------------------------------/ */
+  }
 
   // dropDown lists values definition.
   const depthItems = [
@@ -71,6 +116,16 @@ const Body = () => {
       setIsDisabled(true);
       setIsWaitingResponse(true);
 
+      {
+        /* /----------------------------------------------------------------------------/ */
+      }
+      //calling the function which sends the getURL value to flask for processing
+      // sendURLToServer();
+      // submitURLToServer();
+      {
+        /* /----------------------------------------------------------------------------/ */
+      }
+
       const chatGptApiBody_Summarize = {
         model: "gpt-3.5-turbo",
         messages: [
@@ -86,7 +141,7 @@ const Body = () => {
           },
           {
             role: "user",
-            content: getURL,
+            content: test,
           },
         ],
         temperature: 0.7,
@@ -177,7 +232,7 @@ const Body = () => {
   return (
     <StrictMode>
       <>
-        <h1 style={{ color: "white" }}>{test}</h1>
+        {/* <h1 style={{ color: "white" }}>{test}</h1> */}
         {/* /----------------------------------------------------------------------------/ */}
         <div className="p-lg-5 p-md-0 text-white ">
           <p
