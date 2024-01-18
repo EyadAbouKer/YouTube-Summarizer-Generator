@@ -1,26 +1,16 @@
-import React from "react";
+import React, {useState} from "react";
 import './DropDownMenu.css'
 
-function DropDownMenu(props) {
-
-  let state = {
-    selectedOption: props.selectedIndex
-  }
-
-  let handleChange = ({ target }) => {
-    this.setState({
-      selectedOption: target.value,
-    });
-  }
+function DropDownMenu({items, selected, setSelected}) {
 
   return (
     <select
-      value={state.selectedOption}
-      onChange={handleChange}
+      value={selected}
+      onChange={setSelected}
       cssClass='e-rounded-menu'
       className="stylized-drop-down"
     >
-      {props.items.map(({value, label}, index) => <option value={value}>{label}</option>)}
+      {items.map(({value, label}, index) => <option id={index} value={value}>{label}</option>)}
     </select>
   );
 }

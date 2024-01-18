@@ -1,17 +1,17 @@
-import Form from "react-bootstrap/Form";
 import "./TextOutputFeild.css";
+import parse from 'html-react-parser'; // this will help in converting the html content inside 'summary' variable into a React component.
 
-function TextOutputFeild(props) {
+function TextOutputFeild({summary}) {
+
   return (
-    <textarea
-      placeholder="output text"
-      value={props.value}
-      readOnly={true}
-      rows="30"
-      className="mt-4 form-control mr-sm-2 text-white custom-placeholder"
-      style={{color: 'white', backgroundColor: '#454545', border: 'none', resize: 'none'}}
-    >
-    </textarea>
+    <div
+      className="mt-4 form-control mr-sm-2 text-white custom-placeholder p-3"
+      style={{color: 'white', backgroundColor: '#454545', border: 'none', resize: 'none', height: '1000px'}}
+      >
+      <p>
+        {(summary === "") ? "Output text": parse(summary)}
+      </p>
+    </div>
   );
 }
 
