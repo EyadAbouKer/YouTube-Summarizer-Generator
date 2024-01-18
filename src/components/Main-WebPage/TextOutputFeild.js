@@ -1,6 +1,5 @@
 import "./TextOutputFeild.css";
-import parse from 'html-react-parser';
-import {useEffect, useState} from "react";
+import parse from 'html-react-parser'; // this will help in converting the html content inside 'summary' variable into a React component.
 
 function TextOutputFeild({summary}) {
 
