@@ -123,7 +123,7 @@ const Body = () => {
               <p className="label">Summary Style</p>
               <DropDownMenu items={styleItems} />
             </div>
-            <div className="mb-3 d-flex flex-column justify-content-end m-auto">
+            <div className="mb-3 d-flex flex-column justify-content-end submit-button">
               <SubmitButton onSubmit={handleSubmit} isDisabled={isDisabled} />
             </div>
           </div>
