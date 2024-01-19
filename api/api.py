@@ -25,6 +25,11 @@ from youtube_transcript_api import YouTubeTranscriptApi
 app = Flask(__name__)
 CORS(app)
 
+
+
+    
+
+
 @app.route('/api/getURL', methods=['GET', 'POST'])
 def getURL():
         URL = request.json
