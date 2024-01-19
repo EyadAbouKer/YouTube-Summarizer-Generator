@@ -2,23 +2,37 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 from youtube_transcript_api import YouTubeTranscriptApi
 
-app = Flask(__name__)
-CORS(app)
+# app = Flask(__name__)
+# CORS(app)
 
-@app.route('/api/getURL', methods=['POST'])
-def getURL():
-    # try:
-        URL = request.json
-        received_URL = URL['URL']
-        print(received_URL)
-        return jsonify({"URL": received_URL}), 200
+# @app.route('/api/getURL', methods=['POST'])
+# def getURL():
+#     # try:
+#         URL = request.json
+#         received_URL = URL['URL']
+#         print(received_URL)
+#         return jsonify({"URL": received_URL}), 200
+    
+    
+    
+    
+    
     # except TypeError:
     #     return jsonify({"error": "Bad request, JSON data is expected"}), 400
     # except KeyError:
     #     return jsonify({"error": "JSON data does not have 'URL' key"}), 400
 
+app = Flask(__name__)
+CORS(app)
 
-
+@app.route('/api/getURL', methods=['GET', 'POST'])
+def getURL():
+        URL = request.json
+        received_URL = URL['URL']
+        # return jsonify({"URL": received_URL}), 200
+        received_URL = str(received_URL) #turning the data to string
+        print(type(received_URL))
+        return received_URL
 
 
 
@@ -39,7 +53,8 @@ def dictionaryToString(VideoURL):
 def predict():
     # return {'test': "what is your name"}
     # return dictionaryToString(getURL() )
-    return dictionaryToString('_qIdC1N2qcQ' )
+    temp = getURL()
+    return dictionaryToString(temp)
 
 
 if __name__=="__main__":

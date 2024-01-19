@@ -5,12 +5,13 @@ import SearchBar from "./SearchBar.js";
 import SubmitButton from "./SubmitButton.js";
 import DropDownMenu from "./DropDownMenu.js";
 import TextOutputFeild from "./TextOutputFeild.js";
+import axios from "axios";
 
 const API_KEY = "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";
 
 const Body = () => {
   // get text from python server
-  const [test, setTest] = useState(5);
+  const [test, setTest] = useState("");
   useEffect(() => {
     fetch("/api/route").then((res) =>
       res.json().then((data) => {
@@ -56,7 +57,6 @@ const Body = () => {
   //     });
 
   /* /----------------------------------------------------------------------------/ */
-  /* /----------------------------------------------------------------------------/ */
   //   }
   // const submitURLToServer = async () => {
   //   const receivedURL = {
@@ -73,9 +73,27 @@ const Body = () => {
   //   console.log("the URL submitted is" + resultsInJson);
   // };
 
-  {
-    /* /----------------------------------------------------------------------------/ */
+  /* /----------------------------------------------------------------------------/ */
+  async function sendStringToServer(stringValue) {
+    try {
+      const response = await axios.post(
+        "http://127.0.0.1:5000/api/getURL",
+        { URL: stringValue },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log("Response:", response.data);
+      // Any code here will execute after the response is received
+    } catch (error) {
+      console.error("Error:", error);
+    }
   }
+
+  /* /----------------------------------------------------------------------------/ */
+  /* /----------------------------------------------------------------------------/ */
 
   // dropDown lists values definition.
   const depthItems = [
@@ -120,8 +138,8 @@ const Body = () => {
         /* /----------------------------------------------------------------------------/ */
       }
       //calling the function which sends the getURL value to flask for processing
-      // sendURLToServer();
-      // submitURLToServer();
+
+      sendStringToServer(getURL);
       {
         /* /----------------------------------------------------------------------------/ */
       }
