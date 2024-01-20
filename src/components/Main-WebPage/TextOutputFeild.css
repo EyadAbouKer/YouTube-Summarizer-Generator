@@ -10,3 +10,9 @@
 .form-controll:focus {
 background-color: 	#63666A;
 }
+
+.outputFeildHeader{
+    height: 3vh;
+    background-color: #3A3A3A;
+    border-radius: ;
+}
