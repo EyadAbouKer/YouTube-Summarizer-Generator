@@ -6,8 +6,10 @@ import SubmitButton from "./SubmitButton.js";
 import DropDownMenu from "./DropDownMenu.js";
 import TextOutputFeild from "./TextOutputFeild.js";
 import axios from "axios";
+import key from "./chatGPT_key"
 
-const API_KEY = "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";
+
+const API_KEY = key;
 
 const Body = () => {
   // a hook to dynamically disable Submit button when users should not click it.
