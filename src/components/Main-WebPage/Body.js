@@ -1,4 +1,4 @@
-import React, { StrictMode, useState, useEffect } from "react";
+import React, { StrictMode, useState } from "react";
 import "./Body.css";
 import "./SubmitButton.js";
 import SearchBar from "./SearchBar.js";
@@ -72,9 +72,9 @@ const Body = () => {
   ];
 
   // to keep track of the selected dropdown values.
-  const [selectedDepthOption, setSelectedDepthOption] = useState("brief");
-  const [selectedToneOption, setSelectedToneOption] = useState("normal");
-  const [selectedStyleOption, setSelectedStyleOption] = useState("paragraph");
+  let [selectedDepthOption, setSelectedDepthOption] = useState("brief");
+  let [selectedToneOption, setSelectedToneOption] = useState("normal");
+  let [selectedStyleOption, setSelectedStyleOption] = useState("paragraph");
 
   // summary hook to rerender the summary when the output from chatGPT is generated.
   const [summary, setSummary] = useState("");
@@ -89,7 +89,6 @@ const Body = () => {
     if (isDisabled) {
       alert("YouTube field is empty, please enter a YouTube Link");
     } else {
-      console.log(getURL);
       setIsDisabled(true);
       setIsWaitingResponse(true);
 
@@ -102,30 +101,27 @@ const Body = () => {
       {
         /* /----------------------------------------------------------------------------/ */
       }
-
+      console.log(transcript);
+      console.log(typeof(selectedStyleOption))
+      console.log(selectedStyleOption)
       const chatGptApiBody_Summarize = {
         model: "gpt-3.5-turbo",
         messages: [
           {
             role: "system",
             content:
-              "Summarize the provided content in a " +
-              { selectedStyleOption } +
-              " format; make it " +
-              { selectedDepthOption } +
-              ", and" +
-              { selectedToneOption },
+              "give a short explanation the of the main concepts this video is explaining "+ {selectedDepthOption} +", "+ {selectedToneOption} +", and in "+ {selectedStyleOption} +" format:"
           },
           {
             role: "user",
-            content: transcript,
+            content: "give a short explanation the of the main concepts this video is explaining "+ {selectedDepthOption} +", "+ {selectedToneOption} +", and in "+ {selectedStyleOption} +" format: " + transcript,
           },
         ],
-        temperature: 0.7,
-        max_tokens: 250,
-        top_p: 1,
+        temperature: 0.5,
+        max_tokens: 400,
+        top_p: 0.8,
       };
-      console.log(transcript);
+
       await fetch("https://api.openai.com/v1/chat/completions", {
         method: "POST",
         headers: {
@@ -148,15 +144,15 @@ const Body = () => {
           {
             role: "system",
             content:
-              "return a max of 6 most important keywords in the following and separate them by commas",
+              "return a max of 6 most important keywords of the following separated by commas",
           },
           {
             role: "user",
-            content: summaryVariable,
+            content: "return a max of 6 most important key words of the following separated by commas" + summaryVariable,
           },
         ],
         temperature: 0.7,
-        max_tokens: 50,
+        max_tokens: 1000,
         top_p: 1,
       };
 
@@ -176,6 +172,8 @@ const Body = () => {
           importantKeywords = data.choices[0].message.content.split(",");
         });
 
+      summaryVariable = summaryVariable.split("\n").join("<br>");
+
       for (let i = 0; i < importantKeywords.length; i++) {
         summaryVariable = summaryVariable
           .split(importantKeywords[i])
@@ -184,6 +182,15 @@ const Body = () => {
               importantKeywords[i] +
               "</span>"
           );
+        summaryVariable = summaryVariable
+          .split(importantKeywords[i].toLowerCase())
+          .join(
+            '<span style="color: #DA5B00; font-weight: bold;">' +
+            importantKeywords[i].toLowerCase() +
+            "</span>"
+          );
+
+
       }
       setSummary(summaryVariable);
 
