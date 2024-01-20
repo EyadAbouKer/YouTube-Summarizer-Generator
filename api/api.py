@@ -30,7 +30,7 @@ def getURL():
         for d in transcriptDictionaries:
             concatenated_names += d.get('text') + " "
         # concatenated_names = getURL()
-        concatenated_names = concatenated_names.strip()
+        concatenated_names = concatenated_names.strip() 
        
         return concatenated_names
 
