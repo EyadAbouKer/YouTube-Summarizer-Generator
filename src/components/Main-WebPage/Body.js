@@ -24,6 +24,8 @@ const Body = () => {
   const [isDisabled, setIsDisabled] = useState(true);
   const [isWaitingResponse, setIsWaitingResponse] = useState(false);
 
+  let transcript = "";
+
   // a hook to SubmitButton and SearchBar together
   const [getURL, setURL] = React.useState("");
 
@@ -86,6 +88,7 @@ const Body = () => {
         }
       );
       console.log("Response:", response.data);
+
       // Any code here will execute after the response is received
     } catch (error) {
       console.error("Error:", error);

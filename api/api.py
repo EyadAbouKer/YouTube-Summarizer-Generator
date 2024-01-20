@@ -12,11 +12,11 @@ from youtube_transcript_api import YouTubeTranscriptApi
 #         received_URL = URL['URL']
 #         print(received_URL)
 #         return jsonify({"URL": received_URL}), 200
-    
-    
-    
-    
-    
+
+
+
+
+
     # except TypeError:
     #     return jsonify({"error": "Bad request, JSON data is expected"}), 400
     # except KeyError:
@@ -27,7 +27,7 @@ CORS(app)
 
 
 
-    
+
 
 
 @app.route('/api/getURL', methods=['GET', 'POST'])
@@ -36,8 +36,13 @@ def getURL():
         received_URL = URL['URL']
         # return jsonify({"URL": received_URL}), 200
         received_URL = str(received_URL) #turning the data to string
-        print(type(received_URL))
-        return received_URL
+        transcriptDictionaries = YouTubeTranscriptApi.get_transcript(received_URL)
+        concatenated_names = ""
+        for d in transcriptDictionaries:
+            concatenated_names += d.get('text') + " "
+        # concatenated_names = getURL()
+        concatenated_names = concatenated_names.strip()
+        return concatenated_names
 
 
 
@@ -46,7 +51,7 @@ def getURL():
 
 
 def dictionaryToString(VideoURL):
-    transcriptDictionaries = YouTubeTranscriptApi.get_transcript(VideoURL) 
+    transcriptDictionaries = YouTubeTranscriptApi.get_transcript(VideoURL)
     concatenated_names = ""
     for d in transcriptDictionaries:
         concatenated_names += d.get('text') + " "
