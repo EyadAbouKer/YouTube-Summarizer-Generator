@@ -7,6 +7,7 @@ from youtube_transcript_api import YouTubeTranscriptApi
 #shorts: https://www.youtube.com/shorts/NELdJLUGVPA and https://youtube.com/shorts/NELdJLUGVPA?si=B7eW8JJAowPsPyY8
 #live: https://www.youtube.com/live/JSsputiQCPA?si=jVha5whsvCWGzgKL --> NOTE: CHECK IF GETTING TRANSCRIPT FROM LIVE VIDEO WOULD BE POSSIBLE
 
+
 app = Flask(__name__)
 CORS(app)
 
@@ -32,7 +33,7 @@ def getURL():
         # return jsonify({"URL": received_URL}), 200
         received_URL = str(received_URL) #turning the data to string
         print(received_URL)
-        return received_URL
+        return jsonify({'receivedURL':received_URL})
 
 
 def dictionaryToString(VideoURL):
@@ -48,10 +49,13 @@ def dictionaryToString(VideoURL):
 def predict():
     # return {'test': "what is your name"}
     # return dictionaryToString(getURL() )
-    temp = getURL() #get the URL from React
-    ytVersion = URLModifier(temp) # modify the URL to give us only the version
-    print(ytVersion) #print result 
-    return dictionaryToString(ytVersion) #return transcript
+    #-----------------------------to put back after testing------------------------------------
+    # temp = getURL() #get the URL from React
+    # ytVersion = URLModifier(temp) # modify the URL to give us only the version
+    # print(ytVersion) #print result 
+    #-----------------------------------------------------------------
+    # return dictionaryToString(ytVersion) #return transcript
+    return dictionaryToString('ctEHDSgP2FI') #return transcript
 
 
 if __name__=="__main__":

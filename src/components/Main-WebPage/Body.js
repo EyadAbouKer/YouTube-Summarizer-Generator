@@ -85,7 +85,7 @@ const Body = () => {
           },
         }
       );
-      console.log("Response:", response.data);
+      console.log("Response from server:", response.data);
       // Any code here will execute after the response is received
     } catch (error) {
       console.error("Error:", error);
