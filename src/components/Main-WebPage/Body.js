@@ -78,6 +78,7 @@ const Body = () => {
 
   // summary hook to rerender the summary when the output from chatGPT is generated.
   const [summary, setSummary] = useState("");
+  const [text, setText] = useState("");
 
   // to update the summary when we don't need to rerender it.
   let summaryVariable = "";
@@ -102,19 +103,33 @@ const Body = () => {
         /* /----------------------------------------------------------------------------/ */
       }
       console.log(transcript);
-      console.log(typeof(selectedStyleOption))
-      console.log(selectedStyleOption)
+      console.log(typeof selectedStyleOption);
+      console.log(selectedStyleOption);
       const chatGptApiBody_Summarize = {
         model: "gpt-3.5-turbo",
         messages: [
           {
             role: "system",
             content:
-              "give a short explanation the of the main concepts this video is explaining "+ {selectedDepthOption} +", "+ {selectedToneOption} +", and in "+ {selectedStyleOption} +" format:"
+              "give a short explanation the of the main concepts this video is explaining " +
+              { selectedDepthOption } +
+              ", " +
+              { selectedToneOption } +
+              ", and in " +
+              { selectedStyleOption } +
+              " format:",
           },
           {
             role: "user",
-            content: "give a short explanation the of the main concepts this video is explaining "+ {selectedDepthOption} +", "+ {selectedToneOption} +", and in "+ {selectedStyleOption} +" format: " + transcript,
+            content:
+              "give a short explanation the of the main concepts this video is explaining " +
+              { selectedDepthOption } +
+              ", " +
+              { selectedToneOption } +
+              ", and in " +
+              { selectedStyleOption } +
+              " format: " +
+              transcript,
           },
         ],
         temperature: 0.5,
@@ -148,7 +163,9 @@ const Body = () => {
           },
           {
             role: "user",
-            content: "return a max of 6 most important key words of the following separated by commas" + summaryVariable,
+            content:
+              "return a max of 6 most important key words of the following separated by commas" +
+              summaryVariable,
           },
         ],
         temperature: 0.7,
@@ -172,6 +189,7 @@ const Body = () => {
           importantKeywords = data.choices[0].message.content.split(",");
         });
 
+      setText(summaryVariable);
       summaryVariable = summaryVariable.split("\n").join("<br>");
 
       for (let i = 0; i < importantKeywords.length; i++) {
@@ -186,11 +204,9 @@ const Body = () => {
           .split(importantKeywords[i].toLowerCase())
           .join(
             '<span style="color: #DA5B00; font-weight: bold;">' +
-            importantKeywords[i].toLowerCase() +
-            "</span>"
+              importantKeywords[i].toLowerCase() +
+              "</span>"
           );
-
-
       }
       setSummary(summaryVariable);
 
@@ -273,7 +289,7 @@ const Body = () => {
           {/* /----------------------------------------------------------------------------/ */}
 
           <div className="px-5">
-            <TextOutputFeild summary={summary} />
+            <TextOutputFeild summary={summary} text={text} />
           </div>
           {/* /----------------------------------------------------------------------------/ */}
         </div>
