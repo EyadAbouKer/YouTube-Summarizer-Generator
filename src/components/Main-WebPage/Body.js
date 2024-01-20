@@ -88,7 +88,8 @@ const Body = () => {
         }
       );
       console.log("Response:", response.data);
-
+      console.log(typeof(response.data));
+      transcript = response.data;
       // Any code here will execute after the response is received
     } catch (error) {
       console.error("Error:", error);
@@ -142,7 +143,7 @@ const Body = () => {
       }
       //calling the function which sends the getURL value to flask for processing
 
-      sendStringToServer(getURL);
+      await sendStringToServer(getURL);
       {
         /* /----------------------------------------------------------------------------/ */
       }
@@ -162,14 +163,14 @@ const Body = () => {
           },
           {
             role: "user",
-            content: test,
+            content: transcript,
           },
         ],
         temperature: 0.7,
         max_tokens: 250,
         top_p: 1,
       };
-
+      console.log(transcript)
       await fetch("https://api.openai.com/v1/chat/completions", {
         method: "POST",
         headers: {
