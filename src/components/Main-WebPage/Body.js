@@ -10,19 +10,11 @@ import axios from "axios";
 const API_KEY = "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";
 
 const Body = () => {
-  // get text from python server
-  const [test, setTest] = useState("");
-  useEffect(() => {
-    fetch("/api/route").then((res) =>
-      res.json().then((data) => {
-        setTest(data.test);
-      })
-    );
-  }, []);
-
   // a hook to dynamically disable Submit button when users should not click it.
   const [isDisabled, setIsDisabled] = useState(true);
   const [isWaitingResponse, setIsWaitingResponse] = useState(false);
+
+  let transcript = "";
 
   // a hook to SubmitButton and SearchBar together
   const [getURL, setURL] = React.useState("");
@@ -37,41 +29,6 @@ const Body = () => {
   {
     /* /----------------------------------------------------------------------------/ */
   }
-  // send "getURL" which contains the URL from the search bar
-  // function sendURLToServer() {
-  //   const dataToSendToServer = { string: getURL };
-
-  //   fetch("/api/getURL", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify(dataToSendToServer),
-  //   })
-  //   .then((response) => response.json())
-  //   .then((data) => {
-  //     console.log("Success:", data);
-  //   })
-  //     .catch((error) => {
-  //       console.error("Error:", error);
-  //     });
-
-  /* /----------------------------------------------------------------------------/ */
-  //   }
-  // const submitURLToServer = async () => {
-  //   const receivedURL = {
-  //     'URL' : getURL,
-  //   };
-  //   const result = await fetch("http://127.0.0.1:5000/api/getURL", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify(receivedURL),
-  //   });
-  //   const resultsInJson = await result.json();
-  //   console.log("the URL submitted is" + resultsInJson);
-  // };
 
   /* /----------------------------------------------------------------------------/ */
   async function sendStringToServer(stringValue) {
@@ -85,7 +42,9 @@ const Body = () => {
           },
         }
       );
-      console.log("Response from server:", response.data);
+      console.log("Response:", response.data);
+      console.log(typeof response.data);
+      transcript = response.data;
       // Any code here will execute after the response is received
     } catch (error) {
       console.error("Error:", error);
@@ -139,7 +98,7 @@ const Body = () => {
       }
       //calling the function which sends the getURL value to flask for processing
 
-      sendStringToServer(getURL);
+      await sendStringToServer(getURL);
       {
         /* /----------------------------------------------------------------------------/ */
       }
@@ -159,14 +118,14 @@ const Body = () => {
           },
           {
             role: "user",
-            content: test,
+            content: transcript,
           },
         ],
         temperature: 0.7,
         max_tokens: 250,
         top_p: 1,
       };
-
+      console.log(transcript);
       await fetch("https://api.openai.com/v1/chat/completions", {
         method: "POST",
         headers: {
@@ -250,7 +209,6 @@ const Body = () => {
   return (
     <StrictMode>
       <>
-        {/* <h1 style={{ color: "white" }}>{test}</h1> */}
         {/* /----------------------------------------------------------------------------/ */}
         <div className="p-lg-5 p-md-0 text-white ">
           <p
