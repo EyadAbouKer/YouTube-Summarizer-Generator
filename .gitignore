@@ -48,3 +48,4 @@ Thumbs.db
 
 instance/
 *.sqlite
+/src/components/Main-WebPage/chatGPT_key.js

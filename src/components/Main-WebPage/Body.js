@@ -9,52 +9,23 @@ import axios from "axios";
 import key from "./chatGPT_key"
 
 
-const API_KEY = key;
+
 
 const Body = () => {
+
+  // retrieving chatGPT api
+  const API_KEY = key;
+  
+  
   // a hook to dynamically disable Submit button when users should not click it.
   const [isDisabled, setIsDisabled] = useState(true);
   const [isWaitingResponse, setIsWaitingResponse] = useState(false);
 
-  let transcript = "";
-
   // a hook to SubmitButton and SearchBar together
   const [getURL, setURL] = React.useState("");
 
-  //works with SearchBar to get the input from and update the setURL. it also disables Submit button if search bar is empty.
-  const handleInputChange = (e) => {
-    setURL(e.target.value);
-    if (e.target.value !== "") setIsDisabled(false);
-    else setIsDisabled(true);
-  };
-
-  {
-    /* /----------------------------------------------------------------------------/ */
-  }
-
-  /* /----------------------------------------------------------------------------/ */
-  async function sendStringToServer(stringValue) {
-    try {
-      const response = await axios.post(
-        "http://127.0.0.1:5000/api/getURL",
-        { URL: stringValue },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      console.log("Response:", response.data);
-      console.log(typeof response.data);
-      transcript = response.data;
-      // Any code here will execute after the response is received
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  }
-
-  /* /----------------------------------------------------------------------------/ */
-  /* /----------------------------------------------------------------------------/ */
+  // a temp variable that will store the transcript we retrieve from the backend
+  let transcript = "";
 
   // dropDown lists values definition.
   const depthItems = [
@@ -87,6 +58,148 @@ const Body = () => {
   // to keep track of the important keywords returned by the request from ChatGPT.
   let importantKeywords = [""];
 
+
+  //works with SearchBar to get the input from and update the setURL. it also disables Submit button if search bar is empty.
+  const handleInputChange = (e) => {
+    setURL(e.target.value);
+    if (e.target.value !== "") setIsDisabled(false);
+    else setIsDisabled(true);
+  };
+
+  async function sendStringToServer(stringValue) {
+    try {
+      const response = await axios.post(
+        "http://127.0.0.1:5000/api/getURL",
+        { URL: stringValue },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log("Response:", response.data);
+      console.log(typeof response.data);
+      transcript = response.data;
+      // Any code here will execute after the response is received
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  }
+
+  /* /----------------------------------------------------------------------------/ */
+  /* /----------------------------------------------------------------------------/ */
+
+  async function summarizeIt() {
+    const chatGptApiBody_Summarize = {
+      model: "gpt-3.5-turbo",
+      messages: [
+        {
+          role: "system",
+          content:
+            "give a short explanation the of the main concepts this video is explaining " +
+            { selectedDepthOption } +
+            ", " +
+            { selectedToneOption } +
+            ", and in " +
+            { selectedStyleOption } +
+            " format:",
+        },
+        {
+          role: "user",
+          content:
+            "give a short explanation the of the main concepts this video is explaining " +
+            { selectedDepthOption } +
+            ", " +
+            { selectedToneOption } +
+            ", and in " +
+            { selectedStyleOption } +
+            " format: " +
+            transcript,
+        },
+      ],
+      temperature: 0.5,
+      max_tokens: 400,
+      top_p: 0.8,
+    };
+
+    await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + API_KEY,
+      },
+      body: JSON.stringify(chatGptApiBody_Summarize),
+    })
+      .then((data) => {
+        return data.json();
+      })
+      .then((data) => {
+        console.log(data);
+        summaryVariable = data.choices[0].message.content;
+      });
+  }
+  
+  async function findImportantKeywords() {
+    const chatGPTApiBody_Keywords = {
+      model: "gpt-3.5-turbo",
+      messages: [
+        {
+          role: "system",
+          content:
+            "return a max of 6 most important keywords of the following separated by commas",
+        },
+        {
+          role: "user",
+          content:
+            "return a max of 6 most important key words of the following separated by commas" +
+            summaryVariable,
+        },
+      ],
+      temperature: 0.7,
+      max_tokens: 100,
+      top_p: 1,
+    };
+
+    await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + API_KEY,
+      },
+      body: JSON.stringify(chatGPTApiBody_Keywords),
+    })
+      .then((data) => {
+        return data.json();
+      })
+      .then((data) => {
+        console.log(data);
+        importantKeywords = data.choices[0].message.content.split(",");
+      });
+
+  }
+
+  async function generateVoice() {
+    const chatGPTApiBody_Voice = {
+      model: "tts-1",
+      input: summaryVariable,
+      voice: "alloy"
+    };
+
+    await fetch("https://api.openai.com/v1/audio/speech", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + API_KEY,
+      },
+      body: JSON.stringify(chatGPTApiBody_Voice),
+    })
+      .then((data) => {
+        console.log(data);
+      });
+  }
+
+
+
   //this function is going to be used to push the URL to openAI or to another function that concatenates everything
   async function handleSubmit() {
     if (isDisabled) {
@@ -95,101 +208,26 @@ const Body = () => {
       setIsDisabled(true);
       setIsWaitingResponse(true);
 
-      {
-        /* /----------------------------------------------------------------------------/ */
-      }
+      /***********************************************************************************/
       //calling the function which sends the getURL value to flask for processing
-
       await sendStringToServer(getURL);
-      {
-        /* /----------------------------------------------------------------------------/ */
-      }
+
       console.log(transcript);
       console.log(typeof selectedStyleOption);
       console.log(selectedStyleOption);
-      const chatGptApiBody_Summarize = {
-        model: "gpt-3.5-turbo",
-        messages: [
-          {
-            role: "system",
-            content:
-              "give a short explanation the of the main concepts this video is explaining " +
-              { selectedDepthOption } +
-              ", " +
-              { selectedToneOption } +
-              ", and in " +
-              { selectedStyleOption } +
-              " format:",
-          },
-          {
-            role: "user",
-            content:
-              "give a short explanation the of the main concepts this video is explaining " +
-              { selectedDepthOption } +
-              ", " +
-              { selectedToneOption } +
-              ", and in " +
-              { selectedStyleOption } +
-              " format: " +
-              transcript,
-          },
-        ],
-        temperature: 0.5,
-        max_tokens: 400,
-        top_p: 0.8,
-      };
 
-      await fetch("https://api.openai.com/v1/chat/completions", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + API_KEY,
-        },
-        body: JSON.stringify(chatGptApiBody_Summarize),
-      })
-        .then((data) => {
-          return data.json();
-        })
-        .then((data) => {
-          console.log(data);
-          summaryVariable = data.choices[0].message.content;
-        });
+      /************************************************************************************/
+      // using chatGPT api to find the summary of the transcript
+      await summarizeIt()
 
-      const chatGPTApiBody_Keywords = {
-        model: "gpt-3.5-turbo",
-        messages: [
-          {
-            role: "system",
-            content:
-              "return a max of 6 most important keywords of the following separated by commas",
-          },
-          {
-            role: "user",
-            content:
-              "return a max of 6 most important key words of the following separated by commas" +
-              summaryVariable,
-          },
-        ],
-        temperature: 0.7,
-        max_tokens: 1000,
-        top_p: 1,
-      };
 
-      await fetch("https://api.openai.com/v1/chat/completions", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + API_KEY,
-        },
-        body: JSON.stringify(chatGPTApiBody_Keywords),
-      })
-        .then((data) => {
-          return data.json();
-        })
-        .then((data) => {
-          console.log(data);
-          importantKeywords = data.choices[0].message.content.split(",");
-        });
+      /*************************************************************************************/
+      // using chatGPT api to find the important keywords of the summary
+      await findImportantKeywords();
+
+      /*************************************************************************************/
+      // using chatGPT tts api to get voice of the summary
+      //await generateVoice();
 
       setText(summaryVariable);
       summaryVariable = summaryVariable.split("\n").join("<br>");

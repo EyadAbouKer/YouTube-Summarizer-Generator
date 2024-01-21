@@ -1,7 +1,7 @@
 import "./TextOutputFeild.css";
 import parse from "html-react-parser"; // this will help in converting the html content inside 'summary' variable into a React component.
-import copyIcon from "C:\\Users\\abouk\\Desktop\\Hackathon2024- TheCodFatherCrew\\CONDENSACORE\\ai-summarizer-v.0.0\\src\\assets\\ClipBoard-icon.svg";
-import speaker from "C:\\Users\\abouk\\Desktop\\Hackathon2024- TheCodFatherCrew\\CONDENSACORE\\ai-summarizer-v.0.0\\src\\assets\\speaker.svg";
+import copyIcon from "C:\\Users\\zizoo\\Desktop\\ABOOD\\CODING_MAIN\\ReactProjects\\VScode_projects\\ai-summarizer\\src\\assets\\ClipBoard-icon.svg";
+import speaker from "C:\\Users\\zizoo\\Desktop\\ABOOD\\CODING_MAIN\\ReactProjects\\VScode_projects\\ai-summarizer\\src\\assets\\speaker.svg";
 function TextOutputFeild({ summary, text }) {
   // this function copy summary to clipboard
   const copyToClipboard = () => {
