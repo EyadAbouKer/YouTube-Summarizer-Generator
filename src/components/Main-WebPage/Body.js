@@ -7,7 +7,8 @@ import DropDownMenu from "./DropDownMenu.js";
 import TextOutputFeild from "./TextOutputFeild.js";
 import axios from "axios";
 import key from "./chatGPT_key";
-import ImageGenerator from "./components/Main-WebPage/ImageGenerator";
+
+// import ImageGenerator from "./ImageGenerator.js";
 
 const Body = () => {
   // retrieving chatGPT api
@@ -322,9 +323,9 @@ const Body = () => {
             <TextOutputFeild summary={summary} text={text} />
           </div>
           {/* /----------------------------------------------------------------------------/ */}
-          <div>
+          {/* <div>
             <ImageGenerator />
-          </div>
+          </div> */}
         </div>
       </>
     </StrictMode>
