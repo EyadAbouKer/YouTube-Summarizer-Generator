@@ -1,27 +1,31 @@
 import "./TextOutputFeild.css";
 import parse from "html-react-parser"; // this will help in converting the html content inside 'summary' variable into a React component.
-import copyIcon from "C:\\Users\\abouk\\Desktop\\Hackathon2024- TheCodFatherCrew\\CONDENSACORE\\ai-summarizer-v.0.0\\src\\assets\\ClipBoard-icon.svg";
-import speaker from "C:\\Users\\abouk\\Desktop\\Hackathon2024- TheCodFatherCrew\\CONDENSACORE\\ai-summarizer-v.0.0\\src\\assets\\speaker.svg";
-import audioFile from "C:\\Users\\abouk\\Desktop\\Hackathon2024- TheCodFatherCrew\\CONDENSACORE\\ai-summarizer-v.0.0\\src\\Audio\\Alarm01.wav";
-import { useEffect, useState } from "react";
+import copyIcon from "../../assets/ClipBoard-icon.svg"
+import speaker from "../../assets/speaker.svg"
+import {useEffect, useState} from "react";
 
 function TextOutputFeild({ summary, text }) {
-  const [textForAudio, setTextForAudio] = useState("");
-  const [isSpeaking, setIspeaking] = useState(false);
-  const msg = new SpeechSynthesisUtterance();
 
-  const speechHandler = (msg) => {
-    msg.text = textForAudio;
+  const [textForAudio, setTextForAudio] = useState("");
+  const [isSpeaking, setIsSpeaking] = useState(false);
+
+  let msg = new SpeechSynthesisUtterance();
+  msg.text = textForAudio;
+
+  const speechHandler = () => {
     if (isSpeaking) {
       window.speechSynthesis.cancel();
     } else {
       window.speechSynthesis.speak(msg);
     }
-    setIspeaking(!isSpeaking);
+
+    // Toggle the speaking state
+    setIsSpeaking(!isSpeaking);
   };
 
   useEffect(() => {
     setTextForAudio(text);
+    window.speechSynthesis.cancel();
   }, [text]);
 
   // this function copy summary to clipboard
@@ -34,34 +38,48 @@ function TextOutputFeild({ summary, text }) {
       .catch((err) => {
         console.error("Something went wrong", err);
       });
+
   };
+
+  // Add a beforeunload event listener to cancel speech when the page is refreshed or closed
+  useEffect(() => {
+    const cancelSpeechOnUnload = () => {
+      window.speechSynthesis.cancel();
+    };
+
+    window.addEventListener('beforeunload', cancelSpeechOnUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', cancelSpeechOnUnload);
+    };
+  }, []);
+
   return (
     <>
-      <div
-        className="outputFeildHeader mt-4 d-flex justify-content-end align-items-center"
-        style={{ borderRadius: "10px 10px 0 0" }}
-      >
+      <div className="outputFeildHeader ps-2 pe-2 mt-4 d-flex justify-content-end align-items-center" style={{borderRadius: '10px 10px 0 0'}}>
+
+
+        {/* /--------------------------------speaker--------------------------------------------/ */}
+        <button type="button" className="btn pe-3 ps-3" onClick={(msg) => speechHandler(msg)} title='listen'>
+          <img
+            src={speaker}
+            alt="listen"
+          />
+        </button>
+        {/* /----------------------------------------------------------------------------/ */}
+
+
         {/* /------------------------------------clipboard button----------------------------------------/ */}
         <button
           onClick={copyToClipboard}
           type="button"
-          className="btn pt-1 pb-1 pe-0 ps-3"
-          title="copy"
+          className="btn pe-3 ps-3"
+          title='copy'
         >
           <img src={copyIcon} alt="copy" />
         </button>
         {/* /----------------------------------------------------------------------------/ */}
 
-        {/* /--------------------------------speaker--------------------------------------------/ */}
-        <button
-          type="button"
-          className="btn pt-1 pb-1 pe-3 ps-3"
-          onClick={() => speechHandler(msg)}
-          title="listen"
-        >
-          <img src={speaker} alt="listen" />
-        </button>
-        {/* /----------------------------------------------------------------------------/ */}
       </div>
       <div
         className=" form-control mr-sm-2 text-white custom-placeholder p-3 "
@@ -72,7 +90,7 @@ function TextOutputFeild({ summary, text }) {
           resize: "none",
           height: "500px",
           overflowY: "scroll",
-          borderRadius: "0 0 10px 10px",
+          borderRadius: '0 0 10px 10px'
         }}
       >
         <p>{summary === "" ? "Output text" : parse(summary)}</p>
