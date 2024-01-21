@@ -207,7 +207,55 @@ const Body = () => {
   async function handelSubmit() {
     if (isDisabled) {
       alert("YouTube field is empty, please enter a YouTube Link");
-    } 
+    } else {
+      setIsDisabled(true);
+      setIsWaitingResponse(true);
+
+      /***********************************************************************************/
+      //calling the function which sends the getURL value to flask for processing
+      await sendStringToServer(getURL);
+
+      console.log(transcript);
+      console.log(typeof selectedStyleOption);
+      console.log(selectedStyleOption);
+
+      /************************************************************************************/
+      // using chatGPT api to find the summary of the transcript
+      await summarizeIt();
+
+      /*************************************************************************************/
+      // using chatGPT api to find the important keywords of the summary
+      await findImportantKeywords();
+
+      /*************************************************************************************/
+      // using chatGPT tts api to get voice of the summary
+      //await generateVoice();
+
+      setText(summaryVariable);
+      summaryVariable = summaryVariable.split("\n").join("<br>");
+
+      for (let i = 0; i < importantKeywords.length; i++) {
+        summaryVariable = summaryVariable
+          .split(importantKeywords[i])
+          .join(
+            '<span style="color: #DA5B00; font-weight: bold;">' +
+              importantKeywords[i] +
+              "</span>"
+          );
+        summaryVariable = summaryVariable
+          .split(importantKeywords[i].toLowerCase())
+          .join(
+            '<span style="color: #DA5B00; font-weight: bold;">' +
+              importantKeywords[i].toLowerCase() +
+              "</span>"
+          );
+      }
+      setSummary(summaryVariable);
+
+      setIsDisabled(false);
+      setIsWaitingResponse(false);
+    }
+  }
   return (
     <StrictMode>
       <>
