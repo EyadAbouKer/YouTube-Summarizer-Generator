@@ -20,7 +20,7 @@ const Body = () => {
     { value: "detailed", label: "detailed" },
   ];
   const toneItems = [
-    { value: "funny", label: "funny" },
+    { value: "informative", label: "informative" },
     { value: "normal", label: "normal" },
     { value: "formal", label: "formal" },
   ];
@@ -84,7 +84,7 @@ const Body = () => {
             ", and in " +
             { selectedStyleOption } +
             " format: " +
-            transcript,
+            transcript.substr(0, 10000),
         },
       ],
       temperature: 0.5,
