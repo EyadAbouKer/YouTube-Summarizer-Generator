@@ -10,7 +10,7 @@ function App() {
     <div className="App">
       <Header />
       <Body />
-      {/* <ImageGenerator /> */}
+      {/* <ImageGenerator /> f*/}
     </div>
   );
 }
