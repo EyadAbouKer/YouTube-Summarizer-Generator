@@ -6,17 +6,13 @@ import SubmitButton from "./SubmitButton.js";
 import DropDownMenu from "./DropDownMenu.js";
 import TextOutputFeild from "./TextOutputFeild.js";
 import axios from "axios";
-import key from "./chatGPT_key"
-
-
-
+import key from "./chatGPT_key";
+import ImageGenerator from "./components/Main-WebPage/ImageGenerator";
 
 const Body = () => {
-
   // retrieving chatGPT api
   const API_KEY = key;
-  
-  
+
   // a hook to dynamically disable Submit button when users should not click it.
   const [isDisabled, setIsDisabled] = useState(true);
   const [isWaitingResponse, setIsWaitingResponse] = useState(false);
@@ -57,7 +53,6 @@ const Body = () => {
   let summaryVariable = "";
   // to keep track of the important keywords returned by the request from ChatGPT.
   let importantKeywords = [""];
-
 
   //works with SearchBar to get the input from and update the setURL. it also disables Submit button if search bar is empty.
   const handleInputChange = (e) => {
@@ -138,7 +133,7 @@ const Body = () => {
         summaryVariable = data.choices[0].message.content;
       });
   }
-  
+
   async function findImportantKeywords() {
     const chatGPTApiBody_Keywords = {
       model: "gpt-3.5-turbo",
@@ -175,14 +170,13 @@ const Body = () => {
         console.log(data);
         importantKeywords = data.choices[0].message.content.split(",");
       });
-
   }
 
   async function generateVoice() {
     const chatGPTApiBody_Voice = {
       model: "tts-1",
       input: summaryVariable,
-      voice: "alloy"
+      voice: "alloy",
     };
 
     await fetch("https://api.openai.com/v1/audio/speech", {
@@ -192,13 +186,10 @@ const Body = () => {
         Authorization: "Bearer " + API_KEY,
       },
       body: JSON.stringify(chatGPTApiBody_Voice),
-    })
-      .then((data) => {
-        console.log(data);
-      });
+    }).then((data) => {
+      console.log(data);
+    });
   }
-
-
 
   //this function is going to be used to push the URL to openAI or to another function that concatenates everything
   async function handleSubmit() {
@@ -218,8 +209,7 @@ const Body = () => {
 
       /************************************************************************************/
       // using chatGPT api to find the summary of the transcript
-      await summarizeIt()
-
+      await summarizeIt();
 
       /*************************************************************************************/
       // using chatGPT api to find the important keywords of the summary
@@ -332,6 +322,9 @@ const Body = () => {
             <TextOutputFeild summary={summary} text={text} />
           </div>
           {/* /----------------------------------------------------------------------------/ */}
+          <div>
+            <ImageGenerator />
+          </div>
         </div>
       </>
     </StrictMode>
