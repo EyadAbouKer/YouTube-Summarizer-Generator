@@ -6,12 +6,18 @@ import {useEffect, useState} from "react";
 
 function TextOutputFeild({ summary, text }) {
 
-  const [textForAudio, setTextForAudio] = useState("")
+  const [textForAudio, setTextForAudio] = useState("");
+  const [isSpeaking, setIspeaking] = useState(false);
   const msg = new SpeechSynthesisUtterance()
 
   const speechHandler = (msg) => {
     msg.text = textForAudio
-    window.speechSynthesis.speak(msg)
+    if (isSpeaking) {
+      window.speechSynthesis.cancel();
+    } else {
+      window.speechSynthesis.speak(msg)
+    }
+    setIspeaking(!isSpeaking);
   }
 
   useEffect(() => {
@@ -32,23 +38,25 @@ function TextOutputFeild({ summary, text }) {
   };
   return (
     <>
-      <div className="outputFeildHeader mt-4 rounded d-flex justify-content-end ">
+      <div className="outputFeildHeader mt-4 d-flex justify-content-end " style={{borderRadius: '10px 10px 0 0'}}>
         {/* /------------------------------------clipboard button----------------------------------------/ */}
         <button
           onClick={copyToClipboard}
           type="button"
-          className="btn p-1"
+          className="btn"
+          title='copy'
         >
-          <img src={copyIcon} alt="" className="pd-1"/>
+          <img src={copyIcon} alt="" />
         </button>
         {/* /----------------------------------------------------------------------------/ */}
 
         {/* /--------------------------------speaker--------------------------------------------/ */}
-        <button type="button" className="btn p-1">
+        <button type="button" className="btn">
           <img
             src={speaker}
             alt=""
             className="speaker"
+            title='listen'
             onClick={() => speechHandler(msg)}
           />
         </button>
@@ -61,7 +69,9 @@ function TextOutputFeild({ summary, text }) {
           backgroundColor: "#454545",
           border: "none",
           resize: "none",
-          height: "1000px",
+          height: "500px",
+          overflowY: "scroll",
+          borderRadius: '0 0 10px 10px'
         }}
       >
         <p>{summary === "" ? "Output text" : parse(summary)}</p>
