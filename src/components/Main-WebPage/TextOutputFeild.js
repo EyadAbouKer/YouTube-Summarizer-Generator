@@ -38,26 +38,23 @@ function TextOutputFeild({ summary, text }) {
   };
   return (
     <>
-      <div className="outputFeildHeader mt-4 d-flex justify-content-end " style={{borderRadius: '10px 10px 0 0'}}>
+      <div className="outputFeildHeader mt-4 d-flex justify-content-end align-items-center" style={{borderRadius: '10px 10px 0 0'}}>
         {/* /------------------------------------clipboard button----------------------------------------/ */}
         <button
           onClick={copyToClipboard}
           type="button"
-          className="btn"
+          className="btn pt-1 pb-1 pe-0 ps-3"
           title='copy'
         >
-          <img src={copyIcon} alt="" />
+          <img src={copyIcon} alt="copy" />
         </button>
         {/* /----------------------------------------------------------------------------/ */}
 
         {/* /--------------------------------speaker--------------------------------------------/ */}
-        <button type="button" className="btn">
+        <button type="button" className="btn pt-1 pb-1 pe-3 ps-3" onClick={() => speechHandler(msg)} title='listen'>
           <img
             src={speaker}
-            alt=""
-            className="speaker"
-            title='listen'
-            onClick={() => speechHandler(msg)}
+            alt="listen"
           />
         </button>
         {/* /----------------------------------------------------------------------------/ */}
