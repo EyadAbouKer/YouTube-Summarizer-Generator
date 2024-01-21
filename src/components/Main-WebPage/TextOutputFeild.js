@@ -1,9 +1,23 @@
 import "./TextOutputFeild.css";
 import parse from "html-react-parser"; // this will help in converting the html content inside 'summary' variable into a React component.
-import copyIcon from "C:\\Users\\abouk\\Desktop\\Hackathon2024- TheCodFatherCrew\\CONDENSACORE\\ai-summarizer-v.0.0\\src\\assets\\ClipBoard-icon.svg";
-import speaker from "C:\\Users\\abouk\\Desktop\\Hackathon2024- TheCodFatherCrew\\CONDENSACORE\\ai-summarizer-v.0.0\\src\\assets\\speaker.svg";
-import audioFile from "C:\\Users\\abouk\\Desktop\\Hackathon2024- TheCodFatherCrew\\CONDENSACORE\\ai-summarizer-v.0.0\\src\\Audio\\Alarm01.wav";
+import copyIcon from "C:\\Users\\zizoo\\Desktop\\ABOOD\\CODING_MAIN\\ReactProjects\\VScode_projects\\ai-summarizer\\src\\assets\\ClipBoard-icon.svg";
+import speaker from "C:\\Users\\zizoo\\Desktop\\ABOOD\\CODING_MAIN\\ReactProjects\\VScode_projects\\ai-summarizer\\src\\assets\\speaker.svg";
+import {useEffect, useState} from "react";
+
 function TextOutputFeild({ summary, text }) {
+
+  const [textForAudio, setTextForAudio] = useState("")
+  const msg = new SpeechSynthesisUtterance()
+
+  const speechHandler = (msg) => {
+    msg.text = textForAudio
+    window.speechSynthesis.speak(msg)
+  }
+
+  useEffect(() => {
+    setTextForAudio(text);
+  }, [text]);
+
   // this function copy summary to clipboard
   const copyToClipboard = () => {
     navigator.clipboard
@@ -15,10 +29,6 @@ function TextOutputFeild({ summary, text }) {
         console.error("Something went wrong", err);
       });
 
-    // playSound function that takes a pointer to mp3 and play it in the browser
-    // const playSound = () => {
-
-    //         };
   };
   return (
     <>
@@ -27,20 +37,19 @@ function TextOutputFeild({ summary, text }) {
         <button
           onClick={copyToClipboard}
           type="button"
-          className="btn btn-outline-warning p-1  "
+          className="btn p-1"
         >
-          <img src={copyIcon} alt="" className="pd-1" />
+          <img src={copyIcon} alt="" className="pd-1"/>
         </button>
         {/* /----------------------------------------------------------------------------/ */}
 
         {/* /--------------------------------speaker--------------------------------------------/ */}
-        <audio id="audio" src={audioFile} />
-        <button type="button" class="btn btn-outline-warning p-1">
+        <button type="button" className="btn p-1">
           <img
             src={speaker}
             alt=""
             className="speaker"
-            onClick={() => document.getElementById("audio").play()}
+            onClick={() => speechHandler(msg)}
           />
         </button>
         {/* /----------------------------------------------------------------------------/ */}
