@@ -1,2 +1,2 @@
-const key = "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";
+const key = "";
 export default key;
