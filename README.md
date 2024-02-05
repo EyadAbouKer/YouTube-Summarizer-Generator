@@ -1,70 +1,18 @@
-# Getting Started with Create React App
+# CondensaCore,'an innovative YouTube Video Summarizer web app'
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Led the development of 'CondensaCore,' an innovative YouTube Video Summarizer web app, as a highlight project at ConUHacks - a demanding 24-hour hackathon challenge. This tool represents a breakthrough in digital efficiency, catering to the time-sensitive needs of students and professionals alike.
 
-## Available Scripts
+CondensaCore addresses a common dilemma: the need to grasp the essence of lengthy YouTube lectures without the upfront time investment. Our solution? A user-friendly web app that swiftly generates comprehensive summaries from video links. This not only saves valuable time but also enhances learning and information retention.
 
-In the project directory, you can run:
+Key Contributions and Technical Details:
 
-### `npm start`
+Spearheaded the project from conception to implementation, ensuring seamless integration of front-end and back-end technologies.
+Developed the front-end using React, enhanced by Bootstrap for a responsive and intuitive user interface.
+Integrated OpenAI's GPT-4 API, leveraging its advanced capabilities to produce accurate and coherent summaries.
+Crafted a robust back-end with Python and Flask server, incorporating the 'youtube-transcript-api 0.6.2' by Jdepoix for transcript extraction and processing.
+Implemented a virtual environment to ensure a stable and isolated development space, promoting efficient project management and deployment.
+This project is a testament to my ability to deliver complex, user-centric solutions under tight deadlines, demonstrating proficiency in both front-end and back-end technologies. CondensaCore stands as a prime example of my commitment to innovation and my skill in bridging the gap between technological capability and real-world utility.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+# Explore the source code on GitHub: GitHub - CondensaCore
+# View our Hackathon Submission: Devpost - CondensaCore"
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
